@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=mashiroreader
+Exec=mashiroreader
+Icon=com.github.Urdhva.MashiroReader
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

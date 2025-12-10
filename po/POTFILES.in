@@ -1,0 +1,6 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/com.github.Urdhva.MashiroReader.desktop.in
+data/com.github.Urdhva.MashiroReader.metainfo.xml.in
+data/com.github.Urdhva.MashiroReader.gschema.xml
+src/window.ui
