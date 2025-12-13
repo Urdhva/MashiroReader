@@ -1,3 +1,3 @@
 # mashiroreader
 
-A description of this project.
+A light novel reader I'm building

@@ -7,9 +7,9 @@
     <property name="default-width">800</property>
     <property name="default-height">600</property>
     <property name="content">
-      <object class="AdwToolbarView">
+      <object class="AdwToolbarView">   <!--The top layer container in GNOME. Splits window into header and content -->
         <child type="top">
-          <object class="AdwHeaderBar">
+          <object class="AdwHeaderBar">   <!-- Section 1-->
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="primary">True</property>
@@ -20,8 +20,8 @@
             </child>
           </object>
         </child>
-        <property name="content">
-          <object class="GtkLabel" id="label">
+        <property name="content">   <!--Section 2 -->
+          <object class="GtkLabel" id="label">    <!-- This is the window hook that the rust macro looks for in window.rs -->
             <property name="label" translatable="yes">Hello, World!</property>
             <style>
               <class name="title-1"/>

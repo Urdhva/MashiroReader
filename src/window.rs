@@ -23,8 +23,10 @@ use adw::subclass::prelude::*;
 use gtk::{gio, glib};
 
 mod imp {
+    //connects the xml blueprint and logic (rust code)
     use super::*;
 
+    // '#' defines a macro attribute. Basically adds metadata to the code below it
     #[derive(Debug, Default, gtk::CompositeTemplate)]
     #[template(resource = "/com/github/Urdhva/MashiroReader/window.ui")]
     pub struct MashiroreaderWindow {
@@ -33,8 +35,9 @@ mod imp {
         pub label: TemplateChild<gtk::Label>,
     }
 
-    #[glib::object_subclass]
+    #[glib::object_subclass]        //to add a UI button, add another template class
     impl ObjectSubclass for MashiroreaderWindow {
+
         const NAME: &'static str = "MashiroreaderWindow";
         type Type = super::MashiroreaderWindow;
         type ParentType = adw::ApplicationWindow;

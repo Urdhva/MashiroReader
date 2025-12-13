@@ -30,21 +30,26 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default)]
-    pub struct MashiroreaderApplication {}
+    pub struct MashiroreaderApplication {
+        //this is where we store globalstate data like a database connected to the app
+    }
 
     #[glib::object_subclass]
     impl ObjectSubclass for MashiroreaderApplication {
+        //create new type - MashiroreaderApp -> which itself is a inherited from adw::Application
+        //modern styling and system theme dection out of the box thanks to inheritance
         const NAME: &'static str = "MashiroreaderApplication";
         type Type = super::MashiroreaderApplication;
         type ParentType = adw::Application;
     }
 
+    //constructor for the app
     impl ObjectImpl for MashiroreaderApplication {
         fn constructed(&self) {
             self.parent_constructed();
             let obj = self.obj();
-            obj.setup_gactions();
-            obj.set_accels_for_action("app.quit", &["<control>q"]);
+            obj.setup_gactions();       //setup g-actions. Basically helps us register commands like Cntrl+Q
+            obj.set_accels_for_action("app.quit", &["<control>q"]);     //binds shortcut to command
         }
     }
 
@@ -70,6 +75,7 @@ mod imp {
     impl AdwApplicationImpl for MashiroreaderApplication {}
 }
 
+//this is the public facing rust struct
 glib::wrapper! {
     pub struct MashiroreaderApplication(ObjectSubclass<imp::MashiroreaderApplication>)
         @extends gio::Application, gtk::Application, adw::Application,
@@ -86,6 +92,7 @@ impl MashiroreaderApplication {
     }
 
     fn setup_gactions(&self) {
+        //gacations is any command that is triggered by a key or combination of keys
         let quit_action = gio::ActionEntry::builder("quit")
             .activate(move |app: &Self, _, _| app.quit())
             .build();
