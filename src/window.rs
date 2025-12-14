@@ -30,9 +30,14 @@ mod imp {
     #[derive(Debug, Default, gtk::CompositeTemplate)]
     #[template(resource = "/com/github/Urdhva/MashiroReader/window.ui")]
     pub struct MashiroreaderWindow {
-        // Template widgets
+        //we add UI elements here
+        // Template widgets. pub <id>: TemplateChild<gtk::<gtk class>>,
         #[template_child]
-        pub label: TemplateChild<gtk::Label>,
+        pub textview: TemplateChild<gtk::TextView>,
+
+
+        //#[template_child]
+        //pub label: TemplateChild<gtk::Label>,
     }
 
     #[glib::object_subclass]        //to add a UI button, add another template class

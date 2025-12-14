@@ -9,6 +9,7 @@
     <property name="content">
       <object class="AdwToolbarView">   <!--The top layer container in GNOME. Splits window into header and content -->
         <child type="top">
+
           <object class="AdwHeaderBar">   <!-- Section 1-->
             <child type="end">
               <object class="GtkMenuButton">
@@ -19,14 +20,22 @@
               </object>
             </child>
           </object>
+
         </child>
+
         <property name="content">   <!--Section 2 -->
+
           <object class="GtkLabel" id="label">    <!-- This is the window hook that the rust macro looks for in window.rs -->
             <property name="label" translatable="yes">Hello, World!</property>
             <style>
               <class name="title-1"/>
             </style>
           </object>
+
+          <object class="GtkTextView" id="textview">
+
+          </object>
+
         </property>
       </object>
     </property>
