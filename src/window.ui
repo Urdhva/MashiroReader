@@ -11,6 +11,11 @@
         <child type="top">
 
           <object class="AdwHeaderBar">   <!-- Section 1-->
+            <child type="start">
+              <object class="GtkButton" id="open_button">
+                <property name="label">Open</property>
+              </object>
+            </child>
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="primary">True</property>

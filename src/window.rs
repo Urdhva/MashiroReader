@@ -33,7 +33,12 @@ mod imp {
         //we add UI elements here
         // Template widgets. pub <id>: TemplateChild<gtk::<gtk class>>,
         #[template_child]
+        pub open_button: TemplateChild<gtk::Button>,
+
+        #[template_child]
         pub textview: TemplateChild<gtk::TextView>,
+
+
 
 
         //#[template_child]
