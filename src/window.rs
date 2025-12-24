@@ -21,7 +21,7 @@
 use gtk::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::{gio, glib};       //braces for multiple imports from the same crate
-use gtk::{Button, FileDialog(alias GtkFileDialog), Window};
+use gtk::{Button, FileDialog, Window};
 
 mod imp {
     //connects the xml blueprint and logic (rust code)
