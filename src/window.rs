@@ -20,7 +20,8 @@
 
 use gtk::prelude::*;
 use adw::subclass::prelude::*;
-use gtk::{gio, glib};
+use gtk::{gio, glib};       //braces for multiple imports from the same crate
+use gtk::{Button, FileDialog(alias GtkFileDialog), Window};
 
 mod imp {
     //connects the xml blueprint and logic (rust code)
@@ -38,14 +39,13 @@ mod imp {
         #[template_child]
         pub textview: TemplateChild<gtk::TextView>,
 
-
-
-
-        //#[template_child]
-        //pub label: TemplateChild<gtk::Label>,
     }
 
-    #[glib::object_subclass]        //to add a UI button, add another template class
+    //to add a UI button, add another template class
+
+    //object subclass trait binds the struct to the gobject system
+    //it defines 'what' our object is
+    #[glib::object_subclass]
     impl ObjectSubclass for MashiroreaderWindow {
 
         const NAME: &'static str = "MashiroreaderWindow";
@@ -61,7 +61,22 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for MashiroreaderWindow {}
+    //methods for struct MashiroreaderWindow
+    //impl is used to define a struct
+    impl ObjectImpl for MashiroreaderWindow {
+        //so what I need to do -> Capture the signal.
+        //-> Open the file explorer
+        //-> Connect both these actions
+
+        fn constructed(&self) {
+            self.parent_constructed();      //always chain up??
+
+            self.open_button.connect_clicked(|_| {
+                println!("Button clicked");
+            });
+        }
+    }
+
     impl WidgetImpl for MashiroreaderWindow {}
     impl WindowImpl for MashiroreaderWindow {}
     impl ApplicationWindowImpl for MashiroreaderWindow {}
