@@ -23,6 +23,8 @@ use adw::subclass::prelude::*;
 use gtk::{gio, glib};       //braces for multiple imports from the same crate
 use gtk::{Button, FileDialog, Window};
 
+
+
 mod imp {
     //connects the xml blueprint and logic (rust code)
     use super::*;
@@ -41,10 +43,41 @@ mod imp {
 
     }
 
+    //all the user defined functions go here
+    impl MashiroreaderWindow {
+        fn setup_file_picker(&self) {
+            let file_dialog = FileDialog::builder()
+                .title("Select a file")
+                .accept_label("Open")
+                .modal(true)
+                .build();
+
+            // Cast to adw::ApplicationWindow first, then to gtk::Window
+            let app_window: adw::ApplicationWindow = self.obj().clone().upcast();
+            let window: Window = app_window.upcast();
+
+            glib::spawn_future_local(async move {
+                let result = file_dialog.open_future(Some(&window)).await;
+
+                match result {
+                    Ok(file) => {
+                        if let Some(path) = file.path() {
+                            println!("User selected file {:?}", path);
+                        }
+                    }
+                    Err(error) => {
+                        println!("Error or cancellation occurred: {:?}", error);
+                    }
+                }
+            });
+        }
+    }
+
     //to add a UI button, add another template class
 
     //object subclass trait binds the struct to the gobject system
     //it defines 'what' our object is
+    //"imp for" basically means we're defining a trait behavior
     #[glib::object_subclass]
     impl ObjectSubclass for MashiroreaderWindow {
 
@@ -62,18 +95,21 @@ mod imp {
     }
 
     //methods for struct MashiroreaderWindow
-    //impl is used to define a struct
+    //ObjectImpl is a trait
     impl ObjectImpl for MashiroreaderWindow {
         //so what I need to do -> Capture the signal.
         //-> Open the file explorer
         //-> Connect both these actions
 
-        fn constructed(&self) {
-            self.parent_constructed();      //always chain up??
+        fn constructed(&self){
+            self.parent_constructed();
 
-            self.open_button.connect_clicked(|_| {
-                println!("Button clicked");
-            });
+            self.open_button.connect_clicked(glib::clone!(@weak self as window => move |_| {
+                println!("button clicked");
+
+                //now call method on the window instance
+                window.setup_file_picker();
+            }));
         }
     }
 
@@ -81,6 +117,8 @@ mod imp {
     impl WindowImpl for MashiroreaderWindow {}
     impl ApplicationWindowImpl for MashiroreaderWindow {}
     impl AdwApplicationWindowImpl for MashiroreaderWindow {}
+    //impl IsA<gtk::Window> for MashiroreaderWindow {}
+
 }
 
 glib::wrapper! {
